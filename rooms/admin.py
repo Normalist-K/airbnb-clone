@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from . import models
+from reviews import models as review_models
 
 
 @admin.register(models.RoomType, models.Facility, models.HouseRule, models.Amenity)
@@ -21,17 +22,34 @@ class PhotoInline(admin.TabularInline):
     model = models.Photo
 
 
+class ReviewInline(admin.TabularInline):
+
+    """ Review Inline Admin Definition """
+
+    model = review_models.Review
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
     """ Room Admin Definition """
 
-    inlines = (PhotoInline,)
+    inlines = (PhotoInline, ReviewInline)
 
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "city", "address", "price")},
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "country",
+                    "city",
+                    "address",
+                    "price",
+                    "room_type",
+                )
+            },
         ),
         ("Times", {"fields": ("check_in", "check_out")}),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths",)}),
@@ -39,7 +57,7 @@ class RoomAdmin(admin.ModelAdmin):
             "More About the Space",
             {
                 "classes": ("collapse",),
-                "fields": ("room_type", "amenities", "facilities", "house_rules",),
+                "fields": ("amenities", "facilities", "house_rules",),
             },
         ),
         ("Last details", {"fields": ("host",)}),
@@ -86,8 +104,12 @@ class RoomAdmin(admin.ModelAdmin):
     def count_amenities(self, obj):
         return obj.amenities.count()
 
+    count_amenities.short_description = "Amenity Count"
+
     def count_photos(self, obj):
         return obj.photos.count()
+
+    count_photos.short_description = "Photo Count"
 
 
 @admin.register(models.Photo)
