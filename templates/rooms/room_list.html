@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    Home
+{% endblock page_name %}
+
+{% block content %}
+
+    <ul>
+    {% for room in rooms %}
+        <li>{{room.name}} / ${{room.price}}</li>
+    {% endfor %}
+    </ul>
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}">previous</a>
+    {% endif %}
+
+    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">next</a>
+    {% endif %} 
+
+
+    {% comment %} Using Paginator {% endcomment %}
+
+    {% comment %} 
+    <ul>
+    {% for room in page.object_list %}
+        <li>{{room.name}} / ${{room.price}}</li>
+    {% endfor %}
+    </ul>
+
+    {% if page.has_previous %}
+        <a href="?page={{page.previous_page_number}}">previous</a>
+    {% endif %}
+
+    Page {{page.number}} of {{page.paginator.num_pages}}
+
+    {% if page.has_next %}
+        <a href="?page={{page.next_page_number}}">next</a>
+    {% endif %} 
+    {% endcomment %}
+
+    {% comment %} Manual Coding {% endcomment %}
+    
+    {% comment %}
+    <ul>
+    {% for room in rooms %}
+        <li>{{room.name}} / $ {{room.price}}</li>
+    {% endfor %}
+    </ul>
+
+    <h5>{{page}} page of {{page_count}}<h5>
+    {% if page is not 1 %}
+        <a href="?page={{page|add:-1}}">previous</a>
+    {% endif %}
+    {% for page in page_range %}
+        <a href="?page={{page}}">{{page}}</a>
+    {% endfor %}
+    {% if not page == page_count %}
+        <a href="?page={{page|add:1}}">next</a>
+    {% endif %} 
+    {% endcomment %}
+
+{% endblock content %}
