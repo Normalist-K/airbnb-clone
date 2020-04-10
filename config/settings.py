@@ -51,7 +51,7 @@ PROJECT_APPS = [
     "conversations.apps.ConversationsConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -143,3 +143,7 @@ EMAIL_PORT = "587"
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
 EMAIL_FROM = "No_Reply@sandboxa6496b36112e47af80403eb7468390d3.mailgun.org"
+
+# Auth
+
+LOGIN_URL = "/users/login/"
