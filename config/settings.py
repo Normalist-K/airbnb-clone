@@ -61,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -147,3 +148,7 @@ EMAIL_FROM = "No_Reply@sandboxa6496b36112e47af80403eb7468390d3.mailgun.org"
 # Auth
 
 LOGIN_URL = "/users/login/"
+
+
+# Locale
+LOCALE_PATHs = (os.path.join(BASE_DIR, "locale"),)
